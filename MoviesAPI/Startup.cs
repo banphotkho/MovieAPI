@@ -32,11 +32,15 @@ namespace MoviesAPI
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(Startup));
+
+            // services.AddTransient<IFileStorageService, AzureStorageService>();
+            services.AddTransient<IFileStorageService, InAppSorageService>();
+            services.AddHttpContextAccessor();
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(MyExceptionFilter));
             }).AddXmlDataContractSerializerFormatters();
-           // services.AddSingleton<Irepository, InmemoryRepository>(); 
+           // services.AddSingleton<Irepository, InmemoryRepository>();  // for Azure Storage
             
         }
 
@@ -47,6 +51,9 @@ namespace MoviesAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //use for save file to storage
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

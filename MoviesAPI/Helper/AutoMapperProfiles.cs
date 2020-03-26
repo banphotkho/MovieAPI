@@ -16,7 +16,7 @@ namespace MoviesAPI.Helper
             CreateMap<Genre, GenreDTO>(); //mapping for HttpGet
             CreateMap<GenresCreateDTO, Genre>(); // mapping for HttpPost
             CreateMap<Person, PersonDTO>().ReverseMap(); // mapping for HttpGet
-            CreateMap<PersonCrateDTO, Person>(); // mapping for HttpPost
+            CreateMap<PersonCrateDTO, Person>().ForMember(x=>x.Picture, options => options.Ignore()); // mapping for HttpPost
         }
     }
 }
